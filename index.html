@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BUILD THE FUTURE — AI. Web3. Hackathons.</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800;900&family=JetBrains+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg-deep: #080b1a;
+  --bg-surface: #0d1129;
+  --bg-card: #131836;
+  --cyan: #00e5ff;
+  --cyan-dim: #00e5ff44;
+  --orange: #ff9800;
+  --orange-glow: #ff980066;
+  --magenta: #e040fb;
+  --white: #eef2ff;
+  --white-dim: #eef2ff88;
+  --white-muted: #8892b0;
+  --green: #00e676;
+  --slide-transition: 0.7s cubic-bezier(0.4, 0, 0.1, 1);
+}
+
+html, body {
+  width: 100%; height: 100%;
+  overflow: hidden;
+  background: var(--bg-deep);
+  color: var(--white);
+  font-family: 'Outfit', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* --- NOISE OVERLAY --- */
+body::before {
+  content: '';
+  position: fixed; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  background-size: 200px;
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.5;
+}
+
+/* --- SLIDE CONTAINER --- */
+.deck {
+  width: 100%; height: 100vh;
+  position: relative;
+}
+
+.slide {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  justify-content: center; align-items: center;
+  padding: 5vh 8vw;
+  opacity: 0;
+  transform: translateX(60px);
+  transition: opacity var(--slide-transition), transform var(--slide-transition);
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+.slide.active {
+  opacity: 1; transform: translateX(0);
+  pointer-events: auto;
+}
+.slide.exit-left {
+  opacity: 0; transform: translateX(-60px);
+}
+
+/* --- DECORATIVE LINE (top) --- */
+.slide::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--cyan), var(--magenta), transparent);
+  opacity: 0.7;
+}
+
+/* --- FOOTER BAR --- */
+.slide-footer {
+  position: absolute; bottom: 2.5vh; left: 8vw; right: 8vw;
+  display: flex; justify-content: space-between; align-items: center;
+  border-top: 1px solid #ffffff10;
+  padding-top: 1.2vh;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(10px, 1vw, 13px);
+  color: var(--white-muted);
+  letter-spacing: 0.05em;
+}
+.slide-footer .brand { text-transform: uppercase; letter-spacing: 0.15em; }
+
+/* --- PROGRESS BAR --- */
+.progress-bar {
+  position: fixed; bottom: 0; left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--cyan), var(--magenta));
+  transition: width 0.5s ease;
+  z-index: 100;
+}
+
+/* --- TYPOGRAPHY --- */
+h1.mega {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(3rem, 8vw, 7rem);
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--white) 0%, var(--cyan) 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+h1.mega-orange {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.5rem, 7vw, 6rem);
+  letter-spacing: -0.02em;
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--orange);
+  text-shadow: 0 0 60px var(--orange-glow);
+}
+h2.slide-title {
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 4.5vw, 3.8rem);
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  color: var(--white);
+  margin-bottom: 3vh;
+}
+h2.slide-title .accent { color: var(--cyan); }
+h2.slide-title .orange-accent { color: var(--orange); }
+
+.subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 300;
+  font-size: clamp(1rem, 2vw, 1.6rem);
+  color: var(--cyan);
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  margin-bottom: 1.5vh;
+}
+.sub-subtitle {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 400;
+  font-size: clamp(0.85rem, 1.4vw, 1.2rem);
+  color: var(--white-dim);
+  max-width: 600px;
+  text-align: center;
+  line-height: 1.6;
+}
+
+/* --- BULLET LIST --- */
+.bullet-list {
+  list-style: none;
+  max-width: 750px;
+  width: 100%;
+}
+.bullet-list li {
+  font-size: clamp(0.95rem, 1.5vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--white-dim);
+  padding: 0.6em 0 0.6em 2em;
+  position: relative;
+  border-left: 2px solid #ffffff08;
+  transition: border-color 0.3s;
+}
+.bullet-list li:hover {
+  border-left-color: var(--cyan);
+}
+.bullet-list li::before {
+  content: '';
+  position: absolute; left: -5px; top: 50%;
+  width: 8px; height: 8px;
+  background: var(--cyan);
+  border-radius: 50%;
+  transform: translateY(-50%);
+}
+.bullet-list li strong {
+  color: var(--white);
+  font-weight: 600;
+}
+
+/* --- CALLOUT FOOTER TEXT --- */
+.callout-footer {
+  margin-top: 4vh;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.9rem, 1.6vw, 1.3rem);
+  color: var(--orange);
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
+/* --- STEP LIST --- */
+.step-list {
+  list-style: none;
+  max-width: 700px; width: 100%;
+  counter-reset: step;
+}
+.step-list li {
+  counter-increment: step;
+  font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+  color: var(--white-dim);
+  padding: 1em 0 1em 3.5em;
+  position: relative;
+  border-bottom: 1px solid #ffffff08;
+}
+.step-list li::before {
+  content: counter(step);
+  position: absolute; left: 0; top: 50%;
+  transform: translateY(-50%);
+  width: 2.2em; height: 2.2em;
+  display: flex; align-items: center; justify-content: center;
+  background: var(--cyan-dim);
+  color: var(--cyan);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 0.9em;
+  border-radius: 8px;
+  border: 1px solid var(--cyan-dim);
+}
+.step-list li strong { color: var(--white); }
+
+/* --- FEATURE CARDS (EmpowerTours case study) --- */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.2em;
+  max-width: 780px; width: 100%;
+}
+.feature-card {
+  background: var(--bg-card);
+  border: 1px solid #ffffff0a;
+  border-radius: 12px;
+  padding: 1.4em 1.6em;
+  transition: border-color 0.3s, transform 0.3s;
+}
+.feature-card:hover {
+  border-color: var(--cyan-dim);
+  transform: translateY(-2px);
+}
+.feature-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  color: var(--cyan);
+  margin-bottom: 0.3em;
+}
+.feature-card p {
+  font-size: clamp(0.78rem, 1vw, 0.92rem);
+  color: var(--white-muted);
+  line-height: 1.5;
+}
+
+/* --- IDEA CARDS --- */
+.idea-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1em;
+  max-width: 850px; width: 100%;
+}
+.idea-card {
+  background: linear-gradient(135deg, var(--bg-card) 0%, #1a1f4a 100%);
+  border: 1px solid #ffffff08;
+  border-radius: 14px;
+  padding: 1.4em;
+  text-align: center;
+  transition: transform 0.3s, border-color 0.3s;
+}
+.idea-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--magenta);
+}
+.idea-card .icon {
+  font-size: 2em;
+  margin-bottom: 0.3em;
+  display: block;
+}
+.idea-card h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(0.85rem, 1.1vw, 1rem);
+  color: var(--white);
+  margin-bottom: 0.3em;
+}
+.idea-card p {
+  font-size: clamp(0.72rem, 0.9vw, 0.82rem);
+  color: var(--white-muted);
+  line-height: 1.45;
+}
+
+/* --- PRIZE TAG --- */
+.prize-tag {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--orange) 0%, #f44336 100%);
+  color: var(--bg-deep);
+  font-family: 'Syne', sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.2rem, 2vw, 1.8rem);
+  padding: 0.4em 1em;
+  border-radius: 50px;
+  margin: 1.5vh 0;
+  letter-spacing: 0.03em;
+}
+
+/* --- MOLTIVERSE LINK --- */
+.big-link {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  color: var(--cyan);
+  text-decoration: none;
+  border: 2px solid var(--cyan);
+  border-radius: 16px;
+  padding: 0.3em 0.8em;
+  margin: 2vh 0;
+  transition: all 0.3s;
+  text-shadow: 0 0 30px var(--cyan-dim);
+}
+.big-link:hover {
+  background: var(--cyan);
+  color: var(--bg-deep);
+  text-shadow: none;
+  box-shadow: 0 0 40px var(--cyan-dim);
+}
+
+/* --- TRACKS LAYOUT --- */
+.tracks {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2em;
+  max-width: 700px; width: 100%;
+  margin-top: 1vh;
+}
+.track-card {
+  background: var(--bg-card);
+  border-radius: 14px;
+  padding: 1.5em;
+  border: 1px solid #ffffff0a;
+  text-align: center;
+}
+.track-card.primary { border-color: var(--orange); }
+.track-card.secondary { border-color: var(--cyan); }
+.track-card h3 {
+  font-family: 'Syne', sans-serif;
+  font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+  font-weight: 700;
+  margin-bottom: 0.3em;
+}
+.track-card.primary h3 { color: var(--orange); }
+.track-card.secondary h3 { color: var(--cyan); }
+.track-card .amount {
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  color: var(--white);
+  margin: 0.2em 0;
+}
+.track-card p {
+  font-size: clamp(0.75rem, 0.95vw, 0.88rem);
+  color: var(--white-muted);
+  line-height: 1.5;
+}
+
+/* --- CTA STEPS (final slide) --- */
+.cta-steps {
+  display: flex; gap: 2em;
+  margin: 2vh 0;
+  flex-wrap: wrap; justify-content: center;
+}
+.cta-step {
+  text-align: center;
+}
+.cta-step .num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 2.4em; height: 2.4em;
+  border-radius: 50%;
+  background: var(--bg-card);
+  border: 2px solid var(--cyan);
+  color: var(--cyan);
+  font-family: 'JetBrains Mono', monospace;
+  font-weight: 700;
+  font-size: 1.1em;
+  margin-bottom: 0.5em;
+}
+.cta-step p {
+  font-size: clamp(0.8rem, 1.1vw, 1rem);
+  color: var(--white-dim);
+}
+
+/* --- BADGE --- */
+.badge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: clamp(0.65rem, 0.85vw, 0.78rem);
+  color: var(--green);
+  background: #00e67618;
+  border: 1px solid #00e67633;
+  border-radius: 6px;
+  padding: 0.25em 0.7em;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 1.5vh;
+}
+
+/* --- SLIDE NAV CONTROLS --- */
+.nav-hint {
+  position: fixed; bottom: 2vh; right: 3vw;
+  display: flex; gap: 0.5em;
+  z-index: 50;
+}
+.nav-btn {
+  width: 38px; height: 38px;
+  border-radius: 8px;
+  border: 1px solid #ffffff15;
+  background: var(--bg-card);
+  color: var(--white-muted);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+.nav-btn:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* --- SLIDE-SPECIFIC: animated bg glow --- */
+.bg-glow {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.15;
+  pointer-events: none;
+}
+.glow-cyan { background: var(--cyan); width: 500px; height: 500px; top: -10%; right: -5%; }
+.glow-orange { background: var(--orange); width: 400px; height: 400px; bottom: -10%; left: -5%; }
+.glow-magenta { background: var(--magenta); width: 350px; height: 350px; top: 40%; left: 50%; }
+
+/* --- ANIMATIONS --- */
+@keyframes float-in {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.slide.active .anim {
+  animation: float-in 0.6s ease forwards;
+}
+.slide.active .anim-d1 { animation-delay: 0.1s; opacity: 0; }
+.slide.active .anim-d2 { animation-delay: 0.2s; opacity: 0; }
+.slide.active .anim-d3 { animation-delay: 0.3s; opacity: 0; }
+.slide.active .anim-d4 { animation-delay: 0.4s; opacity: 0; }
+.slide.active .anim-d5 { animation-delay: 0.5s; opacity: 0; }
+.slide.active .anim-d6 { animation-delay: 0.6s; opacity: 0; }
+.slide.active .anim-d7 { animation-delay: 0.7s; opacity: 0; }
+.slide.active .anim-d8 { animation-delay: 0.8s; opacity: 0; }
+
+/* --- RESPONSIVE --- */
+@media (max-width: 700px) {
+  .feature-grid, .tracks { grid-template-columns: 1fr; }
+  .idea-grid { grid-template-columns: 1fr 1fr; }
+  .slide { padding: 4vh 6vw; }
+  .cta-steps { flex-direction: column; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- ========== SLIDE 1: TITLE ========== -->
+  <div class="slide active" data-slide="0">
+    <div class="bg-glow glow-cyan"></div>
+    <div class="bg-glow glow-orange"></div>
+    <div class="subtitle anim anim-d1">AI &middot; Web3 &middot; Hackathons</div>
+    <h1 class="mega anim anim-d2">BUILD THE<br>FUTURE</h1>
+    <p class="sub-subtitle anim anim-d3" style="margin-top:2vh;">How Students Are Building Real Products &mdash; and Winning</p>
+    <div class="slide-footer">
+      <span class="brand">Build The Future</span>
+      <span>1 / 10</span>
+    </div>
+  </div>
+
+  <!-- ========== SLIDE 2: THE WORLD IS CHANGING ========== -->
+  <div class="slide" data-slide="1">
+    <div class="bg-glow glow-magenta"></div>
+    <h2 class="slide-title anim anim-d1">The World Is <span class="accent">Changing</span></h2>
+    <ul class="bullet-list">
+      <li class="anim anim-d2"><strong>AI can now write code</strong>, design interfaces, and deploy apps</li>
+      <li class="anim anim-d3"><strong>Web3 lets anyone own</strong> what they create</li>
+      <li class="anim anim-d4"><strong>Hackathons</strong> are the new job interviews</li>
+      <li class="anim anim-d5">Students who <strong>build NOW</strong> have an unfair advantage</li>
+    </ul>
+    <div class="callout-footer anim anim-d6">The question isn't IF you should build &mdash; it's WHAT</div>
+    <div class="slide-footer">
+      <span class="brand">Build The Future</span>
+      <span>2 / 10</span>
+    </div>
+  </div>
+
+  <!-- ========== SLIDE 3: WHAT IS MOLTIVERSE ========== -->
+  <div class="slide" data-slide="2">
+    <div class="bg-glow glow-cyan"></div>
+    <div class="bg-glow glow-orange"></div>
+    <span class="badge anim anim-d1">Live Now &mdash; Feb 2-18, 2026</span>
+    <h2 class="slide-title anim anim-d2">What is <span class="orange-accent">Moltiverse</span>?</h2>
+    <p class="sub-subtitle anim anim-d3" style="margin-bottom:2vh;text-align:left;max-width:700px;">A 2-week hackathon on the <strong style="color:var(--white)">Monad blockchain</strong>. Build autonomous AI agents that transact, build communities, and monetize.</p>
+    <div class="prize-tag anim anim-d4">$200,000 IN PRIZES</div>
+    <div class="tracks anim anim-d5">
+      <div class="track-card primary">
+        <h3>Agent + Token Track</h3>
+        <div class="amount">$140K</div>
+        <p>Build agents AND launch tokens on nad.fun. 10 open winners at $10K each + $40K liquidity boost.</p>
+      </div>
+      <div class="track-card secondary">
+        <h3>Agent Track</h3>
+        <div class="amount">$60K</div>
+        <p>Pure agent development. 3 open winners + 3 bounty winners at $10K each.</p>
+      </div>
+    </div>
+    <p class="anim anim-d6" style="margin-top:1.5vh;font-size:clamp(0.8rem,1vw,0.95rem);color:var(--white-muted);">Solo devs or teams &bull; Any experience level &bull; No crypto background needed</p>
+    <a href="https://moltiverse.dev" target="_blank" class="big-link anim anim-d7" style="font-size:clamp(1.2rem,2vw,1.8rem);margin-top:1vh;">moltiverse.dev</a>
+    <div class="callout-footer anim anim-d8">Your next big opportunity is live RIGHT NOW</div>
+    <div class="slide-footer">
+      <span class="brand">Build The Future</span>
+      <span>3 / 10</span>
+    </div>
+  </div>
+
+  <!-- ========== SLIDE 4: WHY THIS MATTERS ========== -->
+  <div class="slide" data-slide="3">
+    <div class="bg-glow glow-orange"></div>
+    <h2 class="slide-title anim anim-d1">Why This Matters <span class="accent">For You</span></h2>
+    <ul class="bullet-list">
+      <li class="anim anim-d2"><strong>$10K&ndash;$50K prizes</strong> for projects built in 2 weeks</li>
+      <li class="anim anim-d3"><strong>Real skills:</strong> AI agents, smart contracts, blockchain</li>
+      <li class="anim anim-d4"><strong>Portfolio pieces</strong> that stand out from any classroom project</li>
+      <li class="anim anim-d5"><strong>Connections</strong> with builders, founders, and investors worldwide</li>
+      <li class="anim anim-d6">You don't need a CS degree &mdash; you need <strong>curiosity</strong></li>
+    </ul>
+    <div class="callout-footer anim anim-d7">Hackathons are where careers are launched</div>
+    <div class="slide-footer">
+      <span class="brand">Build The Future</span>
+      <span>4 / 10</span>
+    </div>
+  </div>
+
+  <!-- ========== SLIDE 5: CASE STUDY — EMPOWERTOURS ========== -->
+  <div class="slide" data-slide="4">
+    <div class="bg-glow glow-cyan"></div>
+    <span class="badge anim anim-d1">Case Study</span>
+    <h2 class="slide-title anim anim-d2" style="margin-bottom:2vh;"><span class="accent">EmpowerTours</span></h2>
+    <p class="sub-subtitle anim anim-d3" style="margin-bottom:2.5vh;text-align:center;max-width:600px;">What one builder created using AI tools and the Monad blockchain:</p>
+    <div class="feature-grid">
+      <div class="feature-card anim anim-d4">
+        <h3>Passport NFTs</h3>
+        <p>Mint digital passports for every country you visit &mdash; yours forever on-chain</p>
+      </div>
+      <div class="feature-card anim anim-d5">
+        <h3>Live Radio</h3>
+        <p>Artists earn 70% of revenue. Listeners earn TOURS tokens just for tuning in</p>
+      </div>
+      <div class="feature-card anim anim-d6">
+        <h3>GPS Experiences</h3>
+        <p>Location-locked travel guides created by real locals around the world</p>
+      </div>
+      <div class="feature-card anim anim-d7">
+        <h3>DAO Governance</h3>
+        <p>Community votes on every platform decision &mdash; from features to treasury</p>
+      </div>
+    </div>
+    <p class="anim anim-d8" style="margin-top:2vh;font-size:clamp(0.75rem,0.95vw,0.88rem);color:var(--white-muted);">Built on Monad &bull; Smart Contracts &bull; Pyth Entropy &bull; AI-Assisted Development</p>
+    <div class="callout-footer anim anim-d8">One person. AI-assisted. Built for a hackathon.</div>
+    <div class="slide-footer">
+      <span class="brand">Build The Future</span>
+      <span>5 / 10</span>
+    </div>
+  </div>
+
+  <!-- ========== SLIDE 6: VIBE CODER REVOLUTION ========== -->
+  <div class="slide" data-slide="5">
+    <div class="bg-glow glow-magenta"></div>
+    <div class="bg-glow glow-cyan"></div>
+    <h2 class="slide-title anim anim-d1">The <span class="orange-accent">Vibe Coder</span> Revolution</h2>
+    <ul class="bullet-list">
+      <li class="anim anim-d2">You <strong>don't need</strong> 10 years of experience</li>
+      <li class="anim anim-d3"><strong>AI tools</strong> (Claude, Cursor, Copilot) accelerate everything</li>
+      <li class="anim anim-d4"><strong>"Vibe coding"</strong> = describe what you want, AI helps you build it</li>
+      <li class="anim anim-d5">The <strong>barrier to entry</strong> has never been lower</li>
+      <li class="anim anim-d6"><strong>Build ugly first.</strong> Ship fast. Iterate.</li>
+    </ul>
+    <div class="callout-footer anim anim-d7">The future belongs to builders, not r&eacute;sum&eacute;s</div>
+    <div class="slide-footer">
+      <span class="brand">Build The Future</span>
+      <span>6 / 10</span>
+    </div>
+  </div>
+
+  <!-- ========== SLIDE 7: HOW TO GET STARTED ========== -->
+  <div class="slide" data-slide="6">
+    <div class="bg-glow glow-orange"></div>
+    <h2 class="slide-title anim anim-d1">How To <span class="accent">Get Started</span></h2>
+    <ol class="step-list">
+      <li class="anim anim-d2">Go to <strong>moltiverse.dev</strong> and register</li>
+      <li class="anim anim-d3">Join the <strong>Discord</strong> community</li>
+      <li class="anim anim-d4">Pick a track: <strong>Agent+Token</strong> or <strong>Agent-only</strong></li>
+      <li class="anim anim-d5">Use <strong>starter kits</strong> and weekly workshops</li>
+      <li class="anim anim-d6"><strong>Build, submit, iterate</strong> &mdash; rolling submissions with early feedback</li>
+    </ol>
+    <div class="callout-footer anim anim-d7">You have everything you need to start today</div>
+    <div class="slide-footer">
+      <span class="brand">Build The Future</span>
+      <span>7 / 10</span>
+    </div>
+  </div>
+
+  <!-- ========== SLIDE 8: WHAT YOU COULD BUILD ========== -->
+  <div class="slide" data-slide="7">
+    <div class="bg-glow glow-magenta"></div>
+    <h2 class="slide-title anim anim-d1">What You <span class="accent">Could Build</span></h2>
+    <div class="idea-grid">
+      <div class="idea-card anim anim-d2">
+        <span class="icon">&#x1f4c8;</span>
+        <h4>DeFi Agent</h4>
+        <p>Manages portfolios autonomously on-chain</p>
+      </div>
+      <div class="idea-card anim anim-d3">
+        <span class="icon">&#x1f3ae;</span>
+        <h4>Gaming AI</h4>
+        <p>Plays, earns, and trades in decentralized games</p>
+      </div>
+      <div class="idea-card anim anim-d4">
+        <span class="icon">&#x1f310;</span>
+        <h4>Community Agent</h4>
+        <p>Curates content and grows audiences automatically</p>
+      </div>
+      <div class="idea-card anim anim-d5">
+        <span class="icon">&#x1f30d;</span>
+        <h4>World Builder</h4>
+        <p>Creates interactive experiences and environments</p>
+      </div>
+      <div class="idea-card anim anim-d6" style="grid-column:1/-1;">
+        <span class="icon">&#x2753;</span>
+        <h4>Something Nobody Has Thought Of Yet</h4>
+        <p>That's the whole point.</p>
+      </div>
+    </div>
+    <div class="callout-footer anim anim-d7">$200K in prizes. 2 weeks. Your move.</div>
+    <div class="slide-footer">
+      <span class="brand">Build The Future</span>
+      <span>8 / 10</span>
+    </div>
+  </div>
+
+  <!-- ========== SLIDE 9: TOP SECRET ========== -->
+  <div class="slide" data-slide="8">
+    <div class="bg-glow glow-orange" style="width:600px;height:600px;top:20%;left:30%;opacity:0.12;"></div>
+    <h1 class="mega-orange anim anim-d1">TOP SECRET</h1>
+    <h2 class="slide-title anim anim-d2" style="font-size:clamp(1.4rem,2.5vw,2rem);margin-top:2vh;">The Revolution Is Being Coded</h2>
+    <ul class="bullet-list" style="max-width:650px;">
+      <li class="anim anim-d3">A <strong>global movement</strong> of student builders is emerging</li>
+      <li class="anim anim-d4">They use <strong>AI as their co-pilot</strong></li>
+      <li class="anim anim-d5"><strong>No degree required.</strong> No VC needed.</li>
+      <li class="anim anim-d6">Just <strong>curiosity, persistence,</strong> and willingness to learn</li>
+    </ul>
+    <div class="callout-footer anim anim-d7" style="max-width:600px;font-size:clamp(1rem,1.8vw,1.4rem);">The future isn't something that happens to you &mdash; it's something you BUILD.</div>
+    <div class="slide-footer">
+      <span class="brand">Build The Future</span>
+      <span>9 / 10</span>
+    </div>
+  </div>
+
+  <!-- ========== SLIDE 10: CTA ========== -->
+  <div class="slide" data-slide="9">
+    <div class="bg-glow glow-cyan" style="width:600px;height:600px;top:10%;right:10%;"></div>
+    <div class="bg-glow glow-orange" style="width:500px;height:500px;bottom:5%;left:10%;"></div>
+    <h2 class="slide-title anim anim-d1" style="font-size:clamp(2rem,4vw,3.2rem);">Start <span class="accent">Building</span></h2>
+    <a href="https://moltiverse.dev" target="_blank" class="big-link anim anim-d2">moltiverse.dev</a>
+    <p class="anim anim-d3" style="font-size:clamp(0.95rem,1.5vw,1.25rem);color:var(--orange);font-weight:600;margin:1vh 0;">Register now. Build something. Win $200K.</p>
+    <div class="cta-steps anim anim-d4">
+      <div class="cta-step">
+        <div class="num">1</div>
+        <p>Visit<br><strong style="color:var(--cyan)">moltiverse.dev</strong></p>
+      </div>
+      <div class="cta-step">
+        <div class="num">2</div>
+        <p>Join<br><strong style="color:var(--cyan)">Discord</strong></p>
+      </div>
+      <div class="cta-step">
+        <div class="num">3</div>
+        <p>Start<br><strong style="color:var(--cyan)">Building</strong></p>
+      </div>
+    </div>
+    <div class="callout-footer anim anim-d5" style="font-size:clamp(1.1rem,2vw,1.6rem);margin-top:3vh;">Welcome to the builder economy.</div>
+    <div class="slide-footer">
+      <span class="brand">Build The Future</span>
+      <span>10 / 10</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- PROGRESS BAR -->
+<div class="progress-bar" id="progressBar" style="width:10%;"></div>
+
+<!-- NAV BUTTONS -->
+<div class="nav-hint">
+  <button class="nav-btn" onclick="changeSlide(-1)" aria-label="Previous slide">&#x2190;</button>
+  <button class="nav-btn" onclick="changeSlide(1)" aria-label="Next slide">&#x2192;</button>
+</div>
+
+<script>
+let current = 0;
+const total = 10;
+const slides = document.querySelectorAll('.slide');
+const progress = document.getElementById('progressBar');
+
+function goTo(n) {
+  if (n < 0 || n >= total) return;
+  slides[current].classList.remove('active');
+  slides[current].classList.add('exit-left');
+  setTimeout(() => slides[current === n ? current : (current)].classList.remove('exit-left'), 700);
+  const prev = current;
+  current = n;
+  // reset animations on incoming slide
+  slides[current].querySelectorAll('.anim').forEach(el => {
+    el.style.animation = 'none';
+    el.offsetHeight; // reflow
+    el.style.animation = '';
+  });
+  slides[current].classList.add('active');
+  progress.style.width = ((current + 1) / total * 100) + '%';
+  // clean up old slide
+  setTimeout(() => { slides[prev].classList.remove('exit-left'); }, 750);
+}
+
+function changeSlide(dir) { goTo(current + dir); }
+
+// Keyboard
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+});
+
+// Touch swipe
+let touchStartX = 0;
+document.addEventListener('touchstart', e => { touchStartX = e.changedTouches[0].screenX; });
+document.addEventListener('touchend', e => {
+  const diff = touchStartX - e.changedTouches[0].screenX;
+  if (Math.abs(diff) > 50) changeSlide(diff > 0 ? 1 : -1);
+});
+</script>
+
+</body>
+</html>
