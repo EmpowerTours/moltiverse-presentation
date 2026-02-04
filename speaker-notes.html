@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Speaker Notes — BUILD THE FUTURE</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=JetBrains+Mono:wght@400;700&family=Syne:wght@700;800&display=swap');
+
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --bg: #fdfdff;
+  --surface: #f4f6fb;
+  --border: #e2e6f0;
+  --text: #1a1d2e;
+  --text-dim: #5a6078;
+  --blue: #3b5ccc;
+  --cyan: #0097a7;
+  --orange: #e67e00;
+  --red: #c0392b;
+  --green: #1b8c5a;
+}
+
+html {
+  font-size: 15px;
+}
+body {
+  font-family: 'Outfit', sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  line-height: 1.65;
+  padding: 2rem;
+  max-width: 850px;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+@media print {
+  body { padding: 0; font-size: 12px; }
+  .slide-notes { break-inside: avoid; page-break-inside: avoid; }
+  .page-header { display: none; }
+}
+
+/* --- HEADER --- */
+.page-header {
+  display: flex; justify-content: space-between; align-items: center;
+  border-bottom: 3px solid var(--blue);
+  padding-bottom: 1rem;
+  margin-bottom: 2.5rem;
+}
+.page-header h1 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.6rem;
+  color: var(--blue);
+  letter-spacing: -0.02em;
+}
+.page-header span {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  background: var(--surface);
+  padding: 0.3em 0.8em;
+  border-radius: 6px;
+}
+
+/* --- SLIDE NOTES BLOCK --- */
+.slide-notes {
+  margin-bottom: 2.5rem;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg);
+}
+.slide-header {
+  display: flex; justify-content: space-between; align-items: center;
+  background: var(--surface);
+  padding: 0.9rem 1.4rem;
+  border-bottom: 1px solid var(--border);
+}
+.slide-header h2 {
+  font-family: 'Syne', sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--blue);
+}
+.slide-header .timing {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-dim);
+  background: white;
+  padding: 0.2em 0.6em;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+}
+
+.slide-body {
+  padding: 1.2rem 1.4rem;
+}
+
+/* --- SECTION LABELS --- */
+.section-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 1.2rem 0 0.5rem;
+  padding: 0.2em 0;
+}
+.section-label.delivery { color: var(--cyan); }
+.section-label.say { color: var(--blue); }
+.section-label.stage { color: var(--red); }
+.section-label.key { color: var(--orange); }
+.section-label.transition { color: var(--green); }
+
+/* --- QUOTE BLOCKS (what to say) --- */
+.say-block {
+  background: #f0f4ff;
+  border-left: 3px solid var(--blue);
+  padding: 0.7rem 1rem;
+  margin: 0.4rem 0;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.92rem;
+}
+
+/* --- BULLET LISTS --- */
+.notes-list {
+  list-style: none;
+  margin: 0.3rem 0;
+}
+.notes-list li {
+  font-size: 0.92rem;
+  padding: 0.3em 0 0.3em 1.4em;
+  position: relative;
+  color: var(--text-dim);
+}
+.notes-list li::before {
+  content: '\2022';
+  position: absolute; left: 0.2em;
+  color: var(--cyan);
+  font-weight: 700;
+}
+.notes-list li strong { color: var(--text); }
+
+/* --- TRANSITION BOX --- */
+.transition-box {
+  background: #e8f9ee;
+  border: 1px solid #b8e6c8;
+  border-radius: 8px;
+  padding: 0.6rem 1rem;
+  margin-top: 1rem;
+  font-size: 0.88rem;
+  color: var(--green);
+  font-weight: 600;
+}
+
+/* --- Q&A SECTION --- */
+.qa-item {
+  margin-bottom: 1rem;
+}
+.qa-item h4 {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.95rem;
+  color: var(--blue);
+  margin-bottom: 0.2rem;
+}
+.qa-item p {
+  font-size: 0.88rem;
+  color: var(--text-dim);
+  padding-left: 1em;
+  border-left: 2px solid var(--border);
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Speaker Notes &mdash; BUILD THE FUTURE</h1>
+  <span>10 Slides &bull; ~20 min</span>
+</div>
+
+<!-- ===== SLIDE 1 ===== -->
+<div class="slide-notes">
+  <div class="slide-header">
+    <h2>Slide 1: Title &mdash; "BUILD THE FUTURE"</h2>
+    <span class="timing">0:00 &ndash; 2:00</span>
+  </div>
+  <div class="slide-body">
+    <div class="section-label delivery">Delivery Notes</div>
+    <ul class="notes-list">
+      <li>Open with energy and authenticity &mdash; you're talking to fellow students, not investors</li>
+      <li>Set the tone: this is about <strong>opportunity</strong>, not a sales pitch</li>
+    </ul>
+
+    <div class="section-label say">What To Say</div>
+    <div class="say-block">"How many of you have an idea for an app but thought you needed to be a developer to build it?"</div>
+    <div class="say-block">"How many of you have heard of hackathons but never joined one because you didn't feel ready?"</div>
+    <div class="say-block">"What if I told you that right now &mdash; today &mdash; students with no coding background are building real products using AI and winning serious money?"</div>
+    <div class="say-block">"That's what this talk is about. I'm going to show you how, and I'm going to show you a live opportunity to get started."</div>
+
+    <div class="transition-box">Transition: "Let me show you what's changed..."</div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 2 ===== -->
+<div class="slide-notes">
+  <div class="slide-header">
+    <h2>Slide 2: The World Is Changing</h2>
+    <span class="timing">2:00 &ndash; 5:00</span>
+  </div>
+  <div class="slide-body">
+    <div class="section-label delivery">Delivery Notes</div>
+    <ul class="notes-list">
+      <li>Walk through each bullet slowly &mdash; let each one land</li>
+      <li>Make eye contact as you say "unfair advantage" &mdash; students respond to that phrasing</li>
+    </ul>
+
+    <div class="section-label say">What To Say</div>
+    <div class="say-block">"AI tools can now write functional code from a description. You say 'build me a form that collects emails' and it does it. The gap between idea and product has collapsed."</div>
+    <div class="say-block">"Web3 means you can own your digital creations &mdash; not just post them on someone else's platform."</div>
+    <div class="say-block">"And hackathons? Companies don't care about your GPA anymore. They want to see what you've shipped. Hackathons are where portfolios are built and careers start."</div>
+    <div class="say-block">"Students who start building now &mdash; while everyone else is still just consuming &mdash; have a massive head start."</div>
+
+    <div class="section-label stage">Stage Direction</div>
+    <ul class="notes-list">
+      <li>Pause after the footer text appears: <strong>"The question isn't IF you should build &mdash; it's WHAT"</strong></li>
+    </ul>
+
+    <div class="transition-box">Transition: "Let me show you a specific opportunity that's live right now..."</div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 3 ===== -->
+<div class="slide-notes">
+  <div class="slide-header">
+    <h2>Slide 3: What is Moltiverse?</h2>
+    <span class="timing">5:00 &ndash; 9:00</span>
+  </div>
+  <div class="slide-body">
+    <div class="section-label key">Key Point</div>
+    <ul class="notes-list">
+      <li><strong>This is the most important slide</strong> &mdash; spend time here</li>
+      <li>Make it concrete: real money, real timeline, real opportunity</li>
+    </ul>
+
+    <div class="section-label say">What To Say</div>
+    <div class="say-block">"Moltiverse is a hackathon happening right now &mdash; February 2nd through the 18th. Two weeks. And the prize pool is two hundred thousand dollars."</div>
+    <div class="say-block">"The challenge: build autonomous AI agents on the Monad blockchain. These are AI programs that can make transactions, build communities, and generate value &mdash; on their own."</div>
+    <div class="say-block">"There are two tracks. The Agent plus Token track has $140K in prizes &mdash; you build an AI agent AND launch a token. The Agent track is $60K &mdash; pure development, no token required."</div>
+    <div class="say-block">"You can enter solo or in a team. Any experience level. You do NOT need a crypto background. The organizers provide starter kits and run weekly workshops."</div>
+    <div class="say-block">"The website is moltiverse.dev &mdash; write it down, save it, visit it tonight."</div>
+
+    <div class="section-label delivery">Delivery Notes</div>
+    <ul class="notes-list">
+      <li>Repeat the URL: <strong>moltiverse.dev</strong> at least twice</li>
+      <li>Emphasize "any experience level" and "no crypto background needed" &mdash; these are the objections students will have</li>
+      <li>Show genuine excitement about the prize amounts</li>
+    </ul>
+
+    <div class="transition-box">Transition: "So why should you care? Let me make it personal..."</div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 4 ===== -->
+<div class="slide-notes">
+  <div class="slide-header">
+    <h2>Slide 4: Why This Matters For You</h2>
+    <span class="timing">9:00 &ndash; 11:00</span>
+  </div>
+  <div class="slide-body">
+    <div class="section-label say">What To Say</div>
+    <div class="say-block">"Think about it: $10K for a project built in two weeks. That's more than most summer internships pay in total."</div>
+    <div class="say-block">"But even if you don't win money, you walk away with real skills: AI agent development, smart contracts, blockchain. These are the most in-demand skills in tech right now."</div>
+    <div class="say-block">"You get a portfolio piece that actually matters. Not a to-do app &mdash; a real AI agent that runs on a real blockchain."</div>
+    <div class="say-block">"And you connect with builders from around the world. Some of the best companies in Web3 were born at hackathons."</div>
+
+    <div class="section-label delivery">Delivery Notes</div>
+    <ul class="notes-list">
+      <li>Make the financial comparison concrete &mdash; compare to things students know (internship pay, textbook costs)</li>
+      <li>Emphasize that the <strong>learning</strong> has value even without winning</li>
+    </ul>
+
+    <div class="transition-box">Transition: "Now let me show you what's actually possible. Here's something I built..."</div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 5 ===== -->
+<div class="slide-notes">
+  <div class="slide-header">
+    <h2>Slide 5: Case Study &mdash; EmpowerTours</h2>
+    <span class="timing">11:00 &ndash; 13:00</span>
+  </div>
+  <div class="slide-body">
+    <div class="section-label key">Key Point</div>
+    <ul class="notes-list">
+      <li>This slide is <strong>proof of concept</strong> &mdash; show that one person can build something real</li>
+      <li>Keep it brief &mdash; this is a case study, not a product pitch</li>
+    </ul>
+
+    <div class="section-label say">What To Say</div>
+    <div class="say-block">"This is EmpowerTours &mdash; something I built. Not a team of 20 engineers. One person, using AI tools, building on the Monad blockchain."</div>
+    <div class="say-block">"It has Passport NFTs &mdash; digital stamps for countries you visit, stored on-chain forever. A live radio system where artists earn 70% of revenue. GPS-locked travel experiences created by locals. And a DAO where the community votes on everything."</div>
+    <div class="say-block">"The point isn't about EmpowerTours specifically &mdash; it's that this kind of product is now buildable by students. The tools exist. The platforms exist. You just have to start."</div>
+
+    <div class="section-label delivery">Delivery Notes</div>
+    <ul class="notes-list">
+      <li>Don't spend more than 2 minutes here</li>
+      <li>Walk through each card briefly &mdash; don't deep-dive</li>
+      <li>Emphasize: <strong>"AI-assisted"</strong> and <strong>"one person"</strong></li>
+    </ul>
+
+    <div class="transition-box">Transition: "So how is this possible? Let me explain the revolution that's happening..."</div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 6 ===== -->
+<div class="slide-notes">
+  <div class="slide-header">
+    <h2>Slide 6: The Vibe Coder Revolution</h2>
+    <span class="timing">13:00 &ndash; 15:00</span>
+  </div>
+  <div class="slide-body">
+    <div class="section-label say">What To Say</div>
+    <div class="say-block">"There's a new kind of developer emerging. They're called vibe coders."</div>
+    <div class="say-block">"Vibe coding means you describe what you want to build in natural language, and AI tools like Claude, Cursor, or GitHub Copilot help you write the code."</div>
+    <div class="say-block">"You don't need to memorize syntax. You don't need years of experience. You need to understand what you want to build and be willing to iterate."</div>
+    <div class="say-block">"The best advice I can give you: build ugly first. Don't wait until you know everything. Ship something, get feedback, improve it. That's how real products get made."</div>
+
+    <div class="section-label delivery">Delivery Notes</div>
+    <ul class="notes-list">
+      <li>This is the <strong>empowerment moment</strong> &mdash; students should feel like they can actually do this</li>
+      <li>If possible, do a quick live demo: open Claude or Cursor and show a 30-second AI coding interaction</li>
+    </ul>
+
+    <div class="transition-box">Transition: "OK so how do you actually get started with Moltiverse?"</div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 7 ===== -->
+<div class="slide-notes">
+  <div class="slide-header">
+    <h2>Slide 7: How To Get Started</h2>
+    <span class="timing">15:00 &ndash; 17:00</span>
+  </div>
+  <div class="slide-body">
+    <div class="section-label say">What To Say</div>
+    <div class="say-block">"Step one: go to moltiverse.dev. Right now. Bookmark it."</div>
+    <div class="say-block">"Step two: join the Discord. This is where the community lives &mdash; you can find teammates, ask questions, get help."</div>
+    <div class="say-block">"Step three: pick your track. If you want to experiment with tokens, go Agent+Token. If you just want to build an AI agent, the Agent track is cleaner."</div>
+    <div class="say-block">"Step four: use the starter kits. The organizers have built templates and tools to help you get going fast. And there are weekly workshops."</div>
+    <div class="say-block">"Step five: submit early. Moltiverse uses rolling submissions with early feedback &mdash; you don't have to wait until the deadline. Ship something rough and iterate."</div>
+
+    <div class="section-label delivery">Delivery Notes</div>
+    <ul class="notes-list">
+      <li>Make it <strong>actionable</strong> &mdash; students should feel like they know exactly what to do after this talk</li>
+      <li>Repeat <strong>moltiverse.dev</strong> again here</li>
+    </ul>
+
+    <div class="transition-box">Transition: "Let me give you some ideas for what to build..."</div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 8 ===== -->
+<div class="slide-notes">
+  <div class="slide-header">
+    <h2>Slide 8: What You Could Build</h2>
+    <span class="timing">17:00 &ndash; 18:30</span>
+  </div>
+  <div class="slide-body">
+    <div class="section-label say">What To Say</div>
+    <div class="say-block">"Here are some ideas to spark your imagination."</div>
+    <div class="say-block">"A DeFi agent that manages investment portfolios automatically. A gaming AI that plays blockchain games, earns tokens, and makes trades. A community agent that curates content and grows a following. A world-building agent that creates interactive experiences."</div>
+    <div class="say-block">"But honestly? The best idea is the one nobody in this room has thought of yet. That's the magic of hackathons &mdash; they produce ideas that nobody predicted."</div>
+
+    <div class="section-label delivery">Delivery Notes</div>
+    <ul class="notes-list">
+      <li>Go through ideas quickly &mdash; they're sparks, not deep-dives</li>
+      <li>Linger on the last card: <strong>"Something nobody has thought of yet"</strong></li>
+      <li>Let students start thinking</li>
+    </ul>
+
+    <div class="transition-box">Transition: "Now I want to share something personal with you..."</div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 9 ===== -->
+<div class="slide-notes">
+  <div class="slide-header">
+    <h2>Slide 9: TOP SECRET &mdash; The Revolution Is Being Coded</h2>
+    <span class="timing">18:30 &ndash; 19:30</span>
+  </div>
+  <div class="slide-body">
+    <div class="section-label stage">Stage Direction</div>
+    <ul class="notes-list">
+      <li><strong>THIS IS THE EMOTIONAL PEAK</strong> &mdash; lower your voice, slow down, lean in</li>
+      <li>Create a sense of shared secret &mdash; you're letting them in on something</li>
+    </ul>
+
+    <div class="section-label say">What To Say</div>
+    <div class="say-block">"There's a revolution happening right now. Not with protests &mdash; with code."</div>
+    <div class="say-block">"A global movement of student builders is emerging. They're using AI as their co-pilot. They're building real products, winning real money, and creating real careers."</div>
+    <div class="say-block">"You don't need a computer science degree. You don't need venture capital funding. You don't need permission from anyone."</div>
+    <div class="say-block">"You need curiosity. Persistence. And the willingness to build something ugly and make it better."</div>
+
+    <div class="section-label stage">Build To Crescendo</div>
+    <div class="say-block">"The system wants you to stay consumers. Keep scrolling. Keep watching. Keep waiting for someone to give you a chance."</div>
+    <div class="say-block" style="border-left-color:var(--orange);background:#fff8e8;">"I'm telling you: don't wait. The future isn't something that happens to you &mdash; it's something you BUILD."</div>
+
+    <ul class="notes-list">
+      <li><strong>Pause. Let it land.</strong></li>
+    </ul>
+
+    <div class="transition-box">Transition: "So here's your invitation..."</div>
+  </div>
+</div>
+
+<!-- ===== SLIDE 10 ===== -->
+<div class="slide-notes">
+  <div class="slide-header">
+    <h2>Slide 10: Start Building &mdash; Call to Action</h2>
+    <span class="timing">19:30 &ndash; 20:00</span>
+  </div>
+  <div class="slide-body">
+    <div class="section-label delivery">Delivery Notes</div>
+    <ul class="notes-list">
+      <li>Bring the energy back up &mdash; this is the action moment</li>
+      <li>Be direct and specific</li>
+    </ul>
+
+    <div class="section-label say">What To Say</div>
+    <div class="say-block">"Take out your phones. Right now."</div>
+    <div class="say-block">"Go to moltiverse.dev. Bookmark it. Register."</div>
+    <div class="say-block">"Join the Discord. Find a teammate or go solo."</div>
+    <div class="say-block">"You have until February 18th. Two weeks. $200,000 in prizes. And even if you don't win a cent, you'll walk away with skills, connections, and a project that matters."</div>
+    <div class="say-block" style="border-left-color:var(--orange);background:#fff8e8;">"Welcome to the builder economy. Now go build something."</div>
+
+    <ul class="notes-list">
+      <li>Give them 30&ndash;60 seconds to actually visit the site</li>
+    </ul>
+
+    <div class="transition-box">Transition: "I'd love to take your questions..."</div>
+  </div>
+</div>
+
+<!-- ===== Q&A SECTION ===== -->
+<div class="slide-notes">
+  <div class="slide-header">
+    <h2>Q&A Quick Reference</h2>
+    <span class="timing">Q&A</span>
+  </div>
+  <div class="slide-body">
+    <p style="color:var(--text-dim);margin-bottom:1.2rem;font-size:0.9rem;">Top 12 predicted questions with short answers.</p>
+
+    <div class="qa-item">
+      <h4>1. "I don't know how to code. Can I still participate?"</h4>
+      <p>Yes. AI tools like Claude and Cursor can help you write code from natural language descriptions. The starter kits handle a lot of boilerplate. Many winners at hackathons are beginners who learn fast.</p>
+    </div>
+    <div class="qa-item">
+      <h4>2. "What is Monad?"</h4>
+      <p>A high-performance blockchain &mdash; think of it as a super-fast, cheap version of Ethereum. 10,000 transactions per second. EVM-compatible, so existing tools work with it.</p>
+    </div>
+    <div class="qa-item">
+      <h4>3. "What's an AI agent?"</h4>
+      <p>An AI program that can take actions autonomously &mdash; make transactions, post content, manage funds, interact with other agents. It's AI that does things, not just answers questions.</p>
+    </div>
+    <div class="qa-item">
+      <h4>4. "Do I need to buy crypto to participate?"</h4>
+      <p>No. The hackathon provides what you need to build on testnet. You don't need to invest any money.</p>
+    </div>
+    <div class="qa-item">
+      <h4>5. "Can I participate from anywhere?"</h4>
+      <p>Yes. Moltiverse is fully remote and global. Everything happens on Discord and online.</p>
+    </div>
+    <div class="qa-item">
+      <h4>6. "What if I don't finish in time?"</h4>
+      <p>Submit what you have. Rolling submissions mean you get early feedback. An incomplete but interesting project is better than no submission at all.</p>
+    </div>
+    <div class="qa-item">
+      <h4>7. "How is vibe coding different from regular coding?"</h4>
+      <p>Traditional coding: you memorize syntax and type everything. Vibe coding: you describe what you want in plain language, AI generates the code, you review and refine. It's faster but you still need to understand what you're building.</p>
+    </div>
+    <div class="qa-item">
+      <h4>8. "What tools do I need?"</h4>
+      <p>A laptop, internet connection, and free tools: Claude (AI), a code editor (VS Code or Cursor), and a crypto wallet (MetaMask). All free.</p>
+    </div>
+    <div class="qa-item">
+      <h4>9. "How was EmpowerTours built?"</h4>
+      <p>Using AI-assisted development on the Monad blockchain. Smart contracts in Solidity, frontend in React, provably fair randomness via Pyth Entropy. One person, AI tools, and persistence.</p>
+    </div>
+    <div class="qa-item">
+      <h4>10. "Is Web3/crypto a scam?"</h4>
+      <p>There are scams in every industry. Web3 technology itself &mdash; blockchains, smart contracts, decentralized governance &mdash; is legitimate and being adopted by major institutions. Focus on building real utility, not speculation.</p>
+    </div>
+    <div class="qa-item">
+      <h4>11. "What if I want to build a team?"</h4>
+      <p>Join the Moltiverse Discord. There's a team-finding channel. Post your skills and interests, find complementary teammates. Solo is fine too.</p>
+    </div>
+    <div class="qa-item">
+      <h4>12. "What happens after the hackathon?"</h4>
+      <p>You keep your project, your skills, and your connections. Many hackathon projects become startups. At minimum, you have a portfolio piece and real blockchain development experience.</p>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
